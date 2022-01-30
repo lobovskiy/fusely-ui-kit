@@ -29,6 +29,11 @@ module.exports = {
         ]
       },
       {
+        // adding styles for demo page
+        test: /(demo-style|foundation)\.css$/,
+        use: ["style-loader", "css-loader"]
+      },
+      {
         test: /\.(png|svg|jpg|jpeg|gif)$/i,
         type: 'asset/resource',
         generator: {
