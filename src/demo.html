@@ -109,5 +109,71 @@
             &lt;/div&gt;
         &lt;/div&gt;
     </code></pre>
+    <h2 class="demo-title">Kit color palette in Sass with pick-color function</h2>
+    <pre><code>
+        $fusely-colors: (
+            'primary': (
+                '500': #5952D1,
+                '400': #6C63FF,
+                '300': #9E99FF,
+                '200': #C5C2FF,
+                '100': #ECEBFF
+            ),
+            'secondary': (
+                '500': #FC4A6E,
+                '400': #FD6584,
+                '300': #FD9BAE,
+                '200': #FED7DF,
+                '100': #FEEBEF
+            ),
+            'neutral': (
+                '500': #2F2E41,
+                '400': #717082,
+                '300': #9893A3,
+                '200': #CFCFDE,
+                '100': #FFFFFF
+            )
+        );
+
+        
+        // Parameters and function to set colors
+
+        $fusely-color-key: '400' !default;
+
+        $fusely-opacity: (
+            'light': 0.8, // opacity used with lighter colors
+            'dark': 0.4,  // opacity used with darker colors
+        );
+
+        @function fusely-color(
+            $name: 'primary',
+            $variant: $fusely-color-key,
+            $opacity: 1
+        ) {
+            $color: null;
+
+            // Get the color spectrum
+            $color-spectrum: map-get($fusely-colors, $name);
+
+            // Get the color variant
+            @if $color-spectrum {
+                $color: map-get($color-spectrum, $variant);
+            }
+
+            // Get the alpha setting
+            $alpha: if(type-of($opacity) == 'number', $opacity, map-get($scotch-opacity, $opacity));
+        
+            // Set the alpha of the color
+            @if $alpha {
+                $color: rgba($color, $alpha);
+            }
+
+            @return $color;
+        }
+    </code></pre>
+    <h2 class="demo-title">Example of palette color usage in Sass</h2>
+    <pre><code>
+        color: fusely-color('neutral', '500');
+    </code></pre>
 </body>
 </html>
